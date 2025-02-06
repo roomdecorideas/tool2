@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Formatter</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: #ffffff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h2 {
+            color: #007BFF;
+        }
+        textarea, input, button {
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 15px;
+            background: #eef2ff;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Text Formatter</h2>
+        <label>Judul:</label>
+        <input type="text" id="judul" maxlength="100">
+        
+        <label>Text 1:</label>
+        <textarea id="text1" maxlength="500"></textarea>
+        <label>Text 2:</label>
+        <textarea id="text2" maxlength="500"></textarea>
+        <label>Text 3:</label>
+        <textarea id="text3" maxlength="500"></textarea>
+        <label>Text 4:</label>
+        <textarea id="text4" maxlength="500"></textarea>
+        <label>Text 5:</label>
+        <textarea id="text5" maxlength="500"></textarea>
+        
+        <button onclick="generateOutput()">Generate</button>
+        
+        <div class="output" id="output"></div>
+    </div>
+    
+    <script>
+        function generateOutput() {
+            const numbers = [25, 37, 47, 28, 36, 44, 29, 38, 45];
+            const words = ["Best", "Amazing", "Discover", "Ultimate", "Seasonal", "Top", "Trends", "Perfect", "Simple", "Hacks"];
+            
+            const judul = document.getElementById("judul").value;
+            const text1 = document.getElementById("text1").value;
+            const text2 = document.getElementById("text2").value;
+            const text3 = document.getElementById("text3").value;
+            const text4 = document.getElementById("text4").value;
+            const text5 = document.getElementById("text5").value;
+            
+            const output1 = `{25|37|47|28|36|44|29|38|45} {Best|Amazing|Discover|Ultimate|Seasonal|Top|Trends|Perfect|Simple|Hacks} ${judul} - Room Decor`;
+            const outputParagraph = `{${text1}|${text2}|${text3}|${text4}|${text5}}`;
+            
+            document.getElementById("output").innerHTML = `<strong>${output1}</strong><br><p>${outputParagraph}</p>`;
+        }
+    </script>
+</body>
+</html>
