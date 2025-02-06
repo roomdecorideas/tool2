@@ -2,15 +2,14 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Formatter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
     <style>
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f8f9fa;
             color: #333;
             padding: 20px;
-            text-align: center;
+            text-align: left;
         }
         .container {
             max-width: 700px;
@@ -22,6 +21,12 @@
         }
         h2 {
             color: #007BFF;
+            text-align: left;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
         }
         textarea, input, button {
             width: calc(100% - 20px);
@@ -31,8 +36,6 @@
             border-radius: 5px;
             font-size: 16px;
             display: block;
-            margin-left: auto;
-            margin-right: auto;
         }
         button {
             background-color: #007BFF;
@@ -51,6 +54,7 @@
             border-radius: 5px;
             font-size: 18px;
             font-weight: bold;
+            text-align: left;
         }
     </style>
 </head>
@@ -58,7 +62,7 @@
     <div class="container">
         <h2>Text Formatter</h2>
         <label>Judul:</label>
-        <input type="text" id="judul" maxlength="100">
+        <input type="text" id="judul" maxlength="500">
         
         <label>Text 1:</label>
         <textarea id="text1" maxlength="500"></textarea>
@@ -91,7 +95,7 @@
             const output1 = `{25|37|47|28|36|44|29|38|45} {Best|Amazing|Discover|Ultimate|Seasonal|Top|Trends|Perfect|Simple|Hacks} ${judul} - Room Decor`;
             const outputParagraph = `{${text1}|${text2}|${text3}|${text4}|${text5}}`;
             
-            document.getElementById("output").innerHTML = `<strong>${output1}</strong><br><p>${outputParagraph}</p>`;
+            document.getElementById("output").innerHTML = `${output1}<br><p>${outputParagraph}</p>`;
         }
     </script>
 </body>
