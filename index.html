@@ -79,18 +79,28 @@
     </div>
     
     <script>
+        function toTitleCase(str) {
+            return str.replace(/\b\w+/g, function(word) {
+                return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+            });
+        }
+
         function generateOutput() {
             const numbers = [25, 37, 47, 28, 36, 44, 29, 38, 45];
             const words = ["Best", "Amazing", "Discover", "Ultimate", "Seasonal", "Top", "Trends", "Perfect", "Simple", "Hacks"];
             
-            const judul = document.getElementById("judul").value;
+            let judul = document.getElementById("judul").value;
+            judul = toTitleCase(judul);
+            
             const text1 = document.getElementById("text1").value;
             const text2 = document.getElementById("text2").value;
             const text3 = document.getElementById("text3").value;
             const text4 = document.getElementById("text4").value;
             const text5 = document.getElementById("text5").value;
-            
+
+            <p>Judul :</p>
             const output1 = `{25|37|47|28|36|44|29|38|45} {Best|Amazing|Discover|Ultimate|Seasonal|Top|Trends|Perfect|Simple|Hacks} ${judul} - Room Decor`;
+            <p>Deskripsi :</p>
             const outputParagraph = `{${text1}|${text2}|${text3}|${text4}|${text5}}`;
             
             document.getElementById("output").innerHTML = `${output1}<br><p>${outputParagraph}</p>`;
