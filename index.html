@@ -97,13 +97,11 @@
             const text3 = document.getElementById("text3").value;
             const text4 = document.getElementById("text4").value;
             const text5 = document.getElementById("text5").value;
-
-            <p>Judul :</p>
+            
             const output1 = `{25|37|47|28|36|44|29|38|45} {Best|Amazing|Discover|Ultimate|Seasonal|Top|Trends|Perfect|Simple|Hacks} ${judul} - Room Decor`;
-            <p>Deskripsi :</p>
             const outputParagraph = `{${text1}|${text2}|${text3}|${text4}|${text5}}`;
             
-            document.getElementById("output").innerHTML = `${output1}<br><p>${outputParagraph}</p>`;
+            document.getElementById("output").innerHTML = `Promt text to image:<br>Create 5 a text to image AI prompt like the attached image. I want to create a ${output1} image. The image looks real and alive. use sentences "Ultra-realistic, Hyper-detailed textures, cinematic lighting, depth of field, cozy ethereal mood, 8K resolution". make pictures of different hinges. Maximum 500 characters.<br>Titel:<br>${output1}<br><p>Deskripsi:<br>${outputParagraph}</p>`;
         }
     </script>
 </body>
