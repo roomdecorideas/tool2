@@ -96,7 +96,7 @@
             const text4 = document.getElementById("text4").value;
             const text5 = document.getElementById("text5").value;
             
-            const output1 = `{25|37|47|28|36|44|29|38|45} {Best|Amazing|Discover|Ultimate|Seasonal|Top|Trends|Perfect|Simple|Hacks} ${judul} Room Decor {Ideas|Inspo|Inspiration}`;
+            const output1 = `{25|37|47|28|36|44|29|38|45} {Best|Amazing|Discover|Ultimate|Seasonal|Top|Trends|Perfect|Simple|Hacks} ${judul} | Room Decor {Ideas|Inspo|Inspiration}`;
             const outputParagraph = `{${text1}|${text2}|${text3}|${text4}|${text5}}`;
             
             document.getElementById("output").innerHTML = `<strong>Promt text to image:</strong><br><br>Create 5 a text to image AI prompt like the attached image. I want to create a "${judul}" image. The image looks real and alive. use sentences "Ultra-realistic, Hyper-detailed textures, cinematic lighting, depth of field, cozy ethereal mood, 8K resolution". make pictures of different hinges. Maximum 500 characters.<br><br><strong>Promt artikel:</strong><br><br>I need a professional SEO article writer. Create an informative and innovative article with the main keyword "${judul}". Write in English.<br><br><strong>Promt deskripsi:</strong><br><br>Create 5 SEO description pinterest with these keywords "${judul}". Include 5 popular hashtags related to that keyword. Create a description of 500 characters, no more.<br><br><br><br><center>=== NINJA PITEREST ===</center><br><br><strong>Titel:</strong><br><br>${output1}<br><br><strong>Deskripsi:</strong><br><br>${outputParagraph}`;
