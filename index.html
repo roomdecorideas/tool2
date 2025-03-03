@@ -57,7 +57,7 @@
         }
     </style>
 </head>
-<body onload="loadData()">
+<body>
     <div class="container">        
         <label>Keyword:</label>
         <input type="text" id="judul" maxlength="500">
@@ -74,7 +74,6 @@
         <textarea id="text5" maxlength="500"></textarea>
         
         <button onclick="generateOutput()">Generate</button>
-        <button onclick="clearData()" style="background-color: red;">Hapus Data</button>
         
         <div class="output" id="output"></div>
     </div>
@@ -87,6 +86,7 @@
         }
 
         function generateOutput() {
+                        
             let judul = document.getElementById("judul").value;
             judul = toTitleCase(judul);
             
@@ -100,48 +100,6 @@
             const outputParagraph = `{${text1}|${text2}|${text3}|${text4}|${text5}}`;
             
             document.getElementById("output").innerHTML = `<strong>Promt text to image:</strong><br><br>Create 5 a text to image AI prompt like the attached image. I want to create a "${judul}" image. The image looks real and alive. use sentences "Ultra-realistic, Hyper-detailed textures, cinematic lighting, depth of field, cozy ethereal mood, 8K resolution". make pictures of different hinges. Maximum 500 characters.<br><br><strong>Promt artikel:</strong><br><br>I need a professional SEO article writer. Create an informative and innovative article with the main keyword "${judul}". Write in English.<br><br><strong>Promt deskripsi:</strong><br><br>Create 5 SEO description pinterest with these keywords "${judul}". Include 5 popular hashtags related to that keyword. Create a description of 500 characters, no more.<br><br><br><br><center>=== NINJA PITEREST ===</center><br><br><strong>Titel:</strong><br><br>${output1}<br><br><strong>Deskripsi:</strong><br><br>${outputParagraph}`;
-            
-            document.getElementById("output").innerHTML = outputHTML;
-            
-            saveData();
-        }
-        
-        function saveData() {
-            let data = {
-                judul: document.getElementById("judul").value,
-                text1: document.getElementById("text1").value,
-                text2: document.getElementById("text2").value,
-                text3: document.getElementById("text3").value,
-                text4: document.getElementById("text4").value,
-                text5: document.getElementById("text5").value,
-                output: document.getElementById("output").innerHTML
-            };
-            localStorage.setItem("savedData", JSON.stringify(data));
-        }
-        
-        function loadData() {
-            let data = localStorage.getItem("savedData");
-            if (data) {
-                data = JSON.parse(data);
-                document.getElementById("judul").value = data.judul;
-                document.getElementById("text1").value = data.text1;
-                document.getElementById("text2").value = data.text2;
-                document.getElementById("text3").value = data.text3;
-                document.getElementById("text4").value = data.text4;
-                document.getElementById("text5").value = data.text5;
-                document.getElementById("output").innerHTML = data.output;
-            }
-        }
-        
-        function clearData() {
-            localStorage.removeItem("savedData");
-            document.getElementById("judul").value = "";
-            document.getElementById("text1").value = "";
-            document.getElementById("text2").value = "";
-            document.getElementById("text3").value = "";
-            document.getElementById("text4").value = "";
-            document.getElementById("text5").value = "";
-            document.getElementById("output").innerHTML = "";
         }
     </script>
 </body>
