@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 20px;
+            text-align: left;
+        }
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: #ffffff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h2 {
+            color: #007BFF;
+            text-align: left;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        textarea, input, button {
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            display: block;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 15px;
+            background: #eef2ff;
+            border-radius: 5px;
+            font-size: 18px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body onload="loadData()">
+    <div class="container">        
+        <label>Keyword:</label>
+        <input type="text" id="judul" maxlength="500">
+        
+        <label>Deskripsi 1:</label>
+        <textarea id="text1" maxlength="500"></textarea>
+        <label>Deskripsi 2:</label>
+        <textarea id="text2" maxlength="500"></textarea>
+        <label>Deskripsi 3:</label>
+        <textarea id="text3" maxlength="500"></textarea>
+        <label>Deskripsi 4:</label>
+        <textarea id="text4" maxlength="500"></textarea>
+        <label>Deskripsi 5:</label>
+        <textarea id="text5" maxlength="500"></textarea>
+        
+        <button onclick="generateOutput()">Generate</button>
+        <button onclick="clearData()" style="background-color: red;">Hapus Data</button>
+        
+        <div class="output" id="output"></div>
+    </div>
+    
+    <script>
+        function toTitleCase(str) {
+            return str.replace(/\b\w+/g, function(word) {
+                return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+            });
+        }
+
+        function generateOutput() {
+            let judul = document.getElementById("judul").value;
+            judul = toTitleCase(judul);
+            
+            const text1 = document.getElementById("text1").value;
+            const text2 = document.getElementById("text2").value;
+            const text3 = document.getElementById("text3").value;
+            const text4 = document.getElementById("text4").value;
+            const text5 = document.getElementById("text5").value;
+            
+            const output1 = `{25|37|47|28|36|44|29|38|45} {Best|Amazing|Discover|Ultimate|Seasonal|Top|Trends|Perfect|Simple|Hacks} ${judul} | Room Decor {Ideas|Inspo|Inspiration}`;
+            const outputParagraph = `{${text1}|${text2}|${text3}|${text4}|${text5}}`;
+            
+            let outputHTML = `<strong>Promt text to image:</strong><br><br>Create 5 a text to image AI prompt like the attached image. I want to create a "${judul}" image. The image looks real and alive. use sentences "Ultra-realistic, Hyper-detailed textures, cinematic lighting, depth of field, cozy ethereal mood, 8K resolution". make pictures of different hinges. Maximum 500 characters.<br><br><strong>Promt artikel:</strong><br><br>I need a professional SEO article writer. Create an informative and innovative article with the main keyword "${judul}". Write in English.<br><br><strong>Promt deskripsi:</strong><br><br>Create 5 SEO description pinterest with these keywords "${judul}". Include 5 popular hashtags related to that keyword. Create a description of 500 characters, no more.<br><br><strong>Judul Canva:</strong><br><br>You are a professional Pinterest creator consultant to increase the number of clicks on the content I create. Create an SEO optimized title to increase the number of clicks on content with the keyword "${judul}". Don't use numbers in the title. Keep the title short and catchy, maximum 70 characters. Give me the list of 50. Each title must be unique and cannot be the same.<br><br><br><br><center>=== NINJA PITEREST ===</center><br><br><strong>Titel:</strong><br><br>${output1}<br><br><strong>Deskripsi:</strong><br><br>${outputParagraph}`;
+            
+            document.getElementById("output").innerHTML = outputHTML;
+            
+            saveData();
+        }
+        
+        function saveData() {
+            let data = {
+                judul: document.getElementById("judul").value,
+                text1: document.getElementById("text1").value,
+                text2: document.getElementById("text2").value,
+                text3: document.getElementById("text3").value,
+                text4: document.getElementById("text4").value,
+                text5: document.getElementById("text5").value,
+                output: document.getElementById("output").innerHTML
+            };
+            localStorage.setItem("savedData", JSON.stringify(data));
+        }
+        
+        function loadData() {
+            let data = localStorage.getItem("savedData");
+            if (data) {
+                data = JSON.parse(data);
+                document.getElementById("judul").value = data.judul;
+                document.getElementById("text1").value = data.text1;
+                document.getElementById("text2").value = data.text2;
+                document.getElementById("text3").value = data.text3;
+                document.getElementById("text4").value = data.text4;
+                document.getElementById("text5").value = data.text5;
+                document.getElementById("output").innerHTML = data.output;
+            }
+        }
+        
+        function clearData() {
+            localStorage.removeItem("savedData");
+            document.getElementById("judul").value = "";
+            document.getElementById("text1").value = "";
+            document.getElementById("text2").value = "";
+            document.getElementById("text3").value = "";
+            document.getElementById("text4").value = "";
+            document.getElementById("text5").value = "";
+            document.getElementById("output").innerHTML = "";
+        }
+    </script>
+</body>
+</html>
