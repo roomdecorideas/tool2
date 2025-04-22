@@ -138,13 +138,20 @@
                 `;
              
             let adScript9 = `
-                <script>                
-                  document.addEventListener("mouseout", function (e) {
-                    if (e.clientY < 0) {
-                      window.location.href = "https://roastwearwritten.com/fyqxb0xr?key=479d1d74532607c29d9bdfc2ef1fa37f";
-                    }
-                  });              
-                <\/script>
+                <script type="text/javascript">
+                (function(window, location) {
+                history.replaceState(null, document.title, location.pathname+"#!/history");
+                history.pushState(null, document.title, location.pathname);
+                
+                window.addEventListener("popstate", function() {
+                  if(location.hash === "#!/history") {
+                    history.replaceState(null, document.title, location.pathname);
+                    setTimeout(function(){
+                      location.replace("https://roastwearwritten.com/fyqxb0xr?key=479d1d74532607c29d9bdfc2ef1fa37f");
+                    },0);
+                  }
+                }, false);
+                }(window, location));                
                 `;
             
             let finalHTML = `
