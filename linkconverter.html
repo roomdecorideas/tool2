@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Converter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f0f2f5;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #1a73e8;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #1a73e8;
+        }
+
+        button {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background: #1557b0;
+        }
+
+        .result-container {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            word-break: break-all;
+        }
+
+        .result-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        #result a {
+            color: #1a73e8;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        #result a:hover {
+            text-decoration: underline;
+        }
+
+        .credit {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>URL Converter</h1>
+        
+        <div class="input-group">
+            <input type="text" id="urlInput" placeholder="Masukkan URL yang mengandung :360x526.webp">
+        </div>
+        
+        <button onclick="convertURL()">Convert</button>
+        
+        <div class="result-container">
+            <div class="result-label">Hasil Konversi:</div>
+            <div id="result"></div>
+        </div>
+
+        <div class="credit">
+            © 2023 URL Converter. All rights reserved.
+        </div>
+    </div>
+
+    <script>
+        function convertURL() {
+            const inputUrl = document.getElementById('urlInput').value;
+            const resultDiv = document.getElementById('result');
+            
+            if (!inputUrl) {
+                resultDiv.innerHTML = "Silakan masukkan URL terlebih dahulu!";
+                return;
+            }
+
+            const pattern = /:360x526\.webp/g;
+            const convertedUrl = inputUrl.replace(pattern, '.origin');
+            
+            resultDiv.innerHTML = `<a href="${convertedUrl}" target="_blank">${convertedUrl}</a>`;
+        }
+    </script>
+</body>
+</html>
