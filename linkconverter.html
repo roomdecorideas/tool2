@@ -3,13 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Converter</title>
+    <title>Professional URL Converter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #3b82f6;
+            --success: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
 
         body {
@@ -17,127 +26,309 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #f0f2f5;
-            padding: 20px;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            padding: 2rem;
         }
 
         .container {
             background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 600px;
+            max-width: 640px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--success));
         }
 
         h1 {
-            color: #1a73e8;
-            margin-bottom: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 2rem;
             text-align: center;
             font-size: 2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
         }
 
         .input-group {
             margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            color: var(--dark);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
         }
 
         input[type="text"] {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #ffffff;
+            color: var(--dark);
         }
 
         input[type="text"]:focus {
             outline: none;
-            border-color: #1a73e8;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
         }
 
         button {
-            background: #1a73e8;
-            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
             border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
+            border-radius: 0.75rem;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s ease;
-            width: 100%;
-            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 1rem;
         }
 
-        button:hover {
-            background: #1557b0;
+        .convert-btn {
+            background: var(--primary);
+            color: white;
+            flex: 1;
+        }
+
+        .convert-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-1px);
+        }
+
+        .download-btn {
+            background: var(--success);
+            color: white;
+        }
+
+        .download-btn:hover {
+            background: #059669;
+            transform: translateY(-1px);
         }
 
         .result-container {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            background: #f8f9fa;
-            border-radius: 8px;
-            word-break: break-all;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            position: relative;
         }
 
         .result-label {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
+            color: #64748b;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #result {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
         }
 
         #result a {
-            color: #1a73e8;
+            color: var(--primary);
             text-decoration: none;
             font-weight: 500;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         #result a:hover {
             text-decoration: underline;
         }
 
+        .copy-btn {
+            background: #e2e8f0;
+            color: var(--dark);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: #cbd5e1;
+        }
+
+        .loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .loading::after {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 50%;
+            left: 50%;
+            margin: -8px 0 0 -8px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         .credit {
             text-align: center;
-            margin-top: 1.5rem;
-            color: #666;
-            font-size: 0.9rem;
+            margin-top: 2rem;
+            color: #94a3b8;
+            font-size: 0.875rem;
+        }
+
+        .error-message {
+            color: #dc2626;
+            background: #fee2e2;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-top: 1rem;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>URL Converter</h1>
+        <h1>
+            <i class="fas fa-link"></i>
+            Professional URL Converter
+        </h1>
         
         <div class="input-group">
-            <input type="text" id="urlInput" placeholder="Masukkan URL yang mengandung :360x526.webp">
+            <label for="urlInput">Image URL</label>
+            <input type="text" id="urlInput" placeholder="Paste your image URL here...">
         </div>
-        
-        <button onclick="convertURL()">Convert</button>
-        
+
+        <div class="error-message" id="errorMessage">
+            <i class="fas fa-exclamation-circle"></i>
+            <span></span>
+        </div>
+
+        <div class="button-group">
+            <button class="convert-btn" onclick="convertURL()">
+                <i class="fas fa-magic"></i>
+                Convert URL
+            </button>
+        </div>
+
         <div class="result-container">
-            <div class="result-label">Hasil Konversi:</div>
+            <div class="result-label">
+                <i class="fas fa-download"></i>
+                Converted Result:
+            </div>
             <div id="result"></div>
         </div>
 
         <div class="credit">
-            © 2023 URL Converter. All rights reserved.
+            © 2024 Professional URL Converter. All rights reserved.
         </div>
     </div>
 
     <script>
-        function convertURL() {
+        async function convertURL() {
             const inputUrl = document.getElementById('urlInput').value;
             const resultDiv = document.getElementById('result');
-            
-            if (!inputUrl) {
-                resultDiv.innerHTML = "Silakan masukkan URL terlebih dahulu!";
-                return;
-            }
+            const errorDiv = document.getElementById('errorMessage');
+            const convertBtn = document.querySelector('.convert-btn');
 
-            const pattern = /:360x526\.webp/g;
-            const convertedUrl = inputUrl.replace(pattern, '.origin');
-            
-            resultDiv.innerHTML = `<a href="${convertedUrl}" target="_blank">${convertedUrl}</a>`;
+            // Reset state
+            errorDiv.style.display = 'none';
+            convertBtn.classList.add('loading');
+
+            try {
+                if (!inputUrl) {
+                    throw new Error('Please enter a valid URL');
+                }
+
+                await new Promise(resolve => setTimeout(resolve, 500)); // Simulate processing
+
+                const pattern = /:360x526\.webp/g;
+                const convertedUrl = inputUrl.replace(pattern, '.origin');
+
+                resultDiv.innerHTML = `
+                    <a href="${convertedUrl}" target="_blank">${convertedUrl}</a>
+                    <div class="button-group">
+                        <button class="download-btn" onclick="downloadImage('${convertedUrl.replace(/'/g, "\\'")}')">
+                            <i class="fas fa-download"></i>
+                            Download PNG
+                        </button>
+                        <button class="copy-btn" onclick="copyToClipboard('${convertedUrl}')">
+                            <i class="fas fa-copy"></i>
+                            Copy
+                        </button>
+                    </div>
+                `;
+            } catch (error) {
+                errorDiv.querySelector('span').textContent = error.message;
+                errorDiv.style.display = 'flex';
+                resultDiv.innerHTML = '';
+            } finally {
+                convertBtn.classList.remove('loading');
+            }
+        }
+
+        function downloadImage(url) {
+            const filename = getFileNameFromUrl(url) + '.png';
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('URL copied to clipboard!');
+            });
+        }
+
+        function getFileNameFromUrl(url) {
+            const cleanUrl = url.split(/[?#]/)[0];
+            const segments = cleanUrl.split('/');
+            const lastSegment = segments.pop() || segments.pop();
+            return lastSegment.replace(/\.[^/.]+$/, "");
         }
     </script>
 </body>
