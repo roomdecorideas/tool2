@@ -3,45 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional URL Converter</title>
+    <title>Pro URL Converter</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary: #4361ee;
-            --secondary: #3f37c9;
-            --background: #f8f9ff;
-            --text: #2b2d42;
+            --primary: #2563eb;
+            --secondary: #1d4ed8;
+            --accent: #f59e0b;
+            --background: #f8fafc;
+            --text: #1e293b;
+            --success: #10b981;
+            --error: #ef4444;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
 
         body {
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, var(--background) 0%, #eef2ff 100%);
+            display: grid;
+            place-items: center;
+            background: var(--background);
             padding: 2rem;
+            line-height: 1.5;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
             width: 100%;
-            max-width: 680px;
-            transform: translateY(0);
-            transition: transform 0.3s ease;
-        }
-
-        .container:hover {
-            transform: translateY(-5px);
+            max-width: 640px;
+            border-radius: 1.5rem;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+            padding: 2.5rem;
+            border: 1px solid #e2e8f0;
         }
 
         .header {
@@ -49,20 +47,17 @@
             margin-bottom: 2rem;
         }
 
-        .header i {
+        .header .logo {
             font-size: 2.5rem;
             color: var(--primary);
             margin-bottom: 1rem;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
 
         h1 {
             color: var(--text);
-            font-size: 2rem;
+            font-size: 1.875rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
-            font-weight: 600;
         }
 
         .input-group {
@@ -70,20 +65,21 @@
             margin-bottom: 1.5rem;
         }
 
-        input {
+        .input-field {
             width: 100%;
             padding: 1rem 1rem 1rem 3rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.75rem;
             font-size: 1rem;
-            transition: all 0.3s ease;
-            background-color: #fff;
+            transition: all 0.2s ease;
+            background: #f8fafc;
         }
 
-        input:focus {
+        .input-field:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
         .input-icon {
@@ -91,41 +87,61 @@
             left: 1rem;
             top: 50%;
             transform: translateY(-50%);
-            color: #a5a5a5;
+            color: #94a3b8;
         }
 
-        button {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            padding: 1rem 1.5rem;
             border: none;
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            width: 100%;
+            border-radius: 0.75rem;
             font-weight: 500;
-            letter-spacing: 0.5px;
-            position: relative;
-            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            flex: 2;
         }
 
-        .result-container {
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: var(--text);
+            flex: 1;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            transform: translateY(-1px);
+        }
+
+        .result-card {
             margin-top: 2rem;
-            background: rgba(67, 97, 238, 0.05);
-            border-radius: 12px;
+            background: #f8fafc;
+            border-radius: 0.75rem;
             padding: 1.5rem;
             opacity: 0;
             transform: translateY(10px);
             transition: all 0.3s ease;
         }
 
-        .result-container.show {
+        .result-card.visible {
             opacity: 1;
             transform: translateY(0);
         }
@@ -139,46 +155,66 @@
 
         .result-title {
             color: var(--text);
-            font-weight: 500;
-            font-size: 0.9rem;
+            font-weight: 600;
+            font-size: 0.875rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.05em;
+        }
+
+        .result-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .result-url {
+            color: var(--text);
+            word-break: break-all;
+            flex: 1;
         }
 
         .copy-btn {
-            background: rgba(67, 97, 238, 0.1);
-            color: var(--primary);
-            border: none;
+            background: var(--primary);
+            color: white;
             padding: 0.5rem 1rem;
-            border-radius: 8px;
+            border-radius: 0.5rem;
+            border: none;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background 0.2s ease;
         }
 
         .copy-btn:hover {
-            background: rgba(67, 97, 238, 0.2);
+            background: var(--secondary);
         }
 
-        #convertedUrl {
-            color: var(--text);
-            word-break: break-all;
-            line-height: 1.5;
+        .status-message {
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            display: none;
         }
 
-        .watermark {
-            text-align: center;
-            margin-top: 2rem;
-            color: #a5a5a5;
-            font-size: 0.9rem;
+        .success {
+            background: #d1fae5;
+            color: var(--success);
+            border: 1px solid #a7f3d0;
         }
 
-        @media (max-width: 480px) {
+        .error {
+            background: #fee2e2;
+            color: var(--error);
+            border: 1px solid #fecaca;
+        }
+
+        @media (max-width: 640px) {
             .container {
                 padding: 1.5rem;
             }
             
-            h1 {
-                font-size: 1.5rem;
+            .button-group {
+                flex-direction: column;
             }
         }
     </style>
@@ -186,77 +222,107 @@
 <body>
     <div class="container">
         <div class="header">
-            <i class="fas fa-link"></i>
+            <div class="logo">
+                <i class="fas fa-exchange-alt"></i>
+            </div>
             <h1>Professional URL Converter</h1>
-            <p>Convert your image URLs with ease</p>
+            <p>Transform your URLs with precision</p>
         </div>
 
         <div class="input-group">
             <i class="fas fa-link input-icon"></i>
-            <input type="text" id="urlInput" placeholder="Paste your URL here...">
+            <input type="url" class="input-field" id="urlInput" placeholder="Enter URL containing :360x526.webp">
         </div>
 
-        <button onclick="convertURL()">
-            <i class="fas fa-magic"></i> Convert Now
-        </button>
+        <div class="button-group">
+            <button class="btn btn-primary" onclick="convertURL()">
+                <i class="fas fa-magic"></i> Convert
+            </button>
+            <button class="btn btn-secondary" onclick="clearInput()">
+                <i class="fas fa-eraser"></i> Clear
+            </button>
+        </div>
 
-        <div class="result-container" id="resultContainer">
+        <div class="result-card" id="resultCard">
             <div class="result-header">
-                <span class="result-title">Converted URL:</span>
+                <span class="result-title">Converted URL</span>
                 <button class="copy-btn" onclick="copyToClipboard()">
                     <i class="fas fa-copy"></i> Copy
                 </button>
             </div>
-            <div id="convertedUrl"></div>
+            <div class="result-content">
+                <span class="result-url" id="convertedUrl"></span>
+            </div>
         </div>
 
-        <div class="watermark">
-            © 2023 URL Converter Pro | Secure & Fast
-        </div>
+        <div class="status-message" id="statusMessage"></div>
     </div>
 
     <script>
         function convertURL() {
             const inputUrl = document.getElementById('urlInput').value;
-            const resultContainer = document.getElementById('resultContainer');
+            const resultCard = document.getElementById('resultCard');
             const convertedUrlElement = document.getElementById('convertedUrl');
+            const statusMessage = document.getElementById('statusMessage');
+
+            // Reset status message
+            statusMessage.style.display = 'none';
 
             if (!inputUrl) {
-                showError("Please enter a URL first!");
+                showStatus('Please enter a URL first!', 'error');
+                return;
+            }
+
+            if (!isValidUrl(inputUrl)) {
+                showStatus('Please enter a valid URL!', 'error');
                 return;
             }
 
             const pattern = /:360x526\.webp/g;
             const convertedUrl = inputUrl.replace(pattern, '.origin');
-            
-            // Show result container with animation
-            resultContainer.classList.add('show');
-            convertedUrlElement.innerHTML = convertedUrl;
-            
-            // Auto-open in new tab
+
+            // Show result card
+            resultCard.classList.add('visible');
+            convertedUrlElement.textContent = convertedUrl;
+
+            // Open in new tab
             window.open(convertedUrl, '_blank');
+
+            showStatus('URL converted successfully!', 'success');
+        }
+
+        function clearInput() {
+            document.getElementById('urlInput').value = '';
+            document.getElementById('resultCard').classList.remove('visible');
+            document.getElementById('statusMessage').style.display = 'none';
         }
 
         function copyToClipboard() {
-            const text = document.getElementById('convertedUrl').innerText;
+            const text = document.getElementById('convertedUrl').textContent;
             navigator.clipboard.writeText(text).then(() => {
-                showSuccess("URL copied to clipboard!");
+                showStatus('URL copied to clipboard!', 'success');
             });
         }
 
-        function showError(message) {
-            const inputGroup = document.querySelector('.input-group');
-            inputGroup.style.animation = 'shake 0.4s ease';
-            setTimeout(() => inputGroup.style.animation = '', 400);
-            alert(message);
+        function isValidUrl(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (_) {
+                return false;  
+            }
         }
 
-        function showSuccess(message) {
-            const copyBtn = document.querySelector('.copy-btn');
-            copyBtn.innerHTML = `<i class="fas fa-check"></i> ${message}`;
+        function showStatus(message, type) {
+            const statusMessage = document.getElementById('statusMessage');
+            statusMessage.textContent = message;
+            statusMessage.className = `status-message ${type}`;
+            statusMessage.style.display = 'block';
+            
+            // Auto-hide message
             setTimeout(() => {
-                copyBtn.innerHTML = `<i class="fas fa-copy"></i> Copy`;
-            }, 2000);
+                statusMessage.style.display = 'none';
+            }, 3000);
         }
     </script>
 </body>
