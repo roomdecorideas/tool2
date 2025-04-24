@@ -7,18 +7,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary: #2563eb;
-            --secondary: #3b82f6;
-            --success: #10b981;
-            --dark: #1e293b;
-            --light: #f8fafc;
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --background: #f8f9ff;
+            --text: #2b2d42;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
@@ -26,309 +25,238 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            background: linear-gradient(135deg, var(--background) 0%, #eef2ff 100%);
             padding: 2rem;
         }
 
         .container {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
             padding: 2.5rem;
-            border-radius: 1.5rem;
+            border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 640px;
+            max-width: 680px;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h1 {
+            color: var(--text);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #fff;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a5a5a5;
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 500;
+            letter-spacing: 0.5px;
             position: relative;
             overflow: hidden;
         }
 
-        .container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 8px;
-            background: linear-gradient(90deg, var(--primary), var(--success));
-        }
-
-        h1 {
-            color: var(--dark);
-            margin-bottom: 2rem;
-            text-align: center;
-            font-size: 2rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-        }
-
-        .input-group {
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-
-        .input-group label {
-            display: block;
-            color: var(--dark);
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 0.75rem;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: #ffffff;
-            color: var(--dark);
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        .button-group {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 1rem 1.5rem;
-            border: none;
-            border-radius: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-        }
-
-        .convert-btn {
-            background: var(--primary);
-            color: white;
-            flex: 1;
-        }
-
-        .convert-btn:hover {
-            background: var(--secondary);
-            transform: translateY(-1px);
-        }
-
-        .download-btn {
-            background: var(--success);
-            color: white;
-        }
-
-        .download-btn:hover {
-            background: #059669;
-            transform: translateY(-1px);
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
         }
 
         .result-container {
             margin-top: 2rem;
+            background: rgba(67, 97, 238, 0.05);
+            border-radius: 12px;
             padding: 1.5rem;
-            background: #f8fafc;
-            border-radius: 0.75rem;
-            position: relative;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
         }
 
-        .result-label {
-            color: #64748b;
-            font-size: 0.875rem;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .result-container.show {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        #result {
+        .result-header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
         }
 
-        #result a {
-            color: var(--primary);
-            text-decoration: none;
+        .result-title {
+            color: var(--text);
             font-weight: 500;
-            flex: 1;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        #result a:hover {
-            text-decoration: underline;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .copy-btn {
-            background: #e2e8f0;
-            color: var(--dark);
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            border: none;
             padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-size: 0.875rem;
-            transition: all 0.2s ease;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .copy-btn:hover {
-            background: #cbd5e1;
+            background: rgba(67, 97, 238, 0.2);
         }
 
-        .loading {
-            position: relative;
-            pointer-events: none;
-            opacity: 0.8;
+        #convertedUrl {
+            color: var(--text);
+            word-break: break-all;
+            line-height: 1.5;
         }
 
-        .loading::after {
-            content: "";
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            top: 50%;
-            left: 50%;
-            margin: -8px 0 0 -8px;
-            border: 2px solid #fff;
-            border-radius: 50%;
-            border-top-color: transparent;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .credit {
+        .watermark {
             text-align: center;
             margin-top: 2rem;
-            color: #94a3b8;
-            font-size: 0.875rem;
+            color: #a5a5a5;
+            font-size: 0.9rem;
         }
 
-        .error-message {
-            color: #dc2626;
-            background: #fee2e2;
-            padding: 1rem;
-            border-radius: 0.75rem;
-            margin-top: 1rem;
-            display: none;
-            align-items: center;
-            gap: 0.5rem;
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>
+        <div class="header">
             <i class="fas fa-link"></i>
-            Professional URL Converter
-        </h1>
-        
+            <h1>Professional URL Converter</h1>
+            <p>Convert your image URLs with ease</p>
+        </div>
+
         <div class="input-group">
-            <label for="urlInput">Image URL</label>
-            <input type="text" id="urlInput" placeholder="Paste your image URL here...">
+            <i class="fas fa-link input-icon"></i>
+            <input type="text" id="urlInput" placeholder="Paste your URL here...">
         </div>
 
-        <div class="error-message" id="errorMessage">
-            <i class="fas fa-exclamation-circle"></i>
-            <span></span>
-        </div>
+        <button onclick="convertURL()">
+            <i class="fas fa-magic"></i> Convert Now
+        </button>
 
-        <div class="button-group">
-            <button class="convert-btn" onclick="convertURL()">
-                <i class="fas fa-magic"></i>
-                Convert URL
-            </button>
-        </div>
-
-        <div class="result-container">
-            <div class="result-label">
-                <i class="fas fa-download"></i>
-                Converted Result:
+        <div class="result-container" id="resultContainer">
+            <div class="result-header">
+                <span class="result-title">Converted URL:</span>
+                <button class="copy-btn" onclick="copyToClipboard()">
+                    <i class="fas fa-copy"></i> Copy
+                </button>
             </div>
-            <div id="result"></div>
+            <div id="convertedUrl"></div>
         </div>
 
-        <div class="credit">
-            © 2024 Professional URL Converter. All rights reserved.
+        <div class="watermark">
+            © 2023 URL Converter Pro | Secure & Fast
         </div>
     </div>
 
     <script>
-        async function convertURL() {
+        function convertURL() {
             const inputUrl = document.getElementById('urlInput').value;
-            const resultDiv = document.getElementById('result');
-            const errorDiv = document.getElementById('errorMessage');
-            const convertBtn = document.querySelector('.convert-btn');
+            const resultContainer = document.getElementById('resultContainer');
+            const convertedUrlElement = document.getElementById('convertedUrl');
 
-            // Reset state
-            errorDiv.style.display = 'none';
-            convertBtn.classList.add('loading');
-
-            try {
-                if (!inputUrl) {
-                    throw new Error('Please enter a valid URL');
-                }
-
-                await new Promise(resolve => setTimeout(resolve, 500)); // Simulate processing
-
-                const pattern = /:360x526\.webp/g;
-                const convertedUrl = inputUrl.replace(pattern, '.origin');
-
-                resultDiv.innerHTML = `
-                    <a href="${convertedUrl}" target="_blank">${convertedUrl}</a>
-                    <div class="button-group">
-                        <button class="download-btn" onclick="downloadImage('${convertedUrl.replace(/'/g, "\\'")}')">
-                            <i class="fas fa-download"></i>
-                            Download PNG
-                        </button>
-                        <button class="copy-btn" onclick="copyToClipboard('${convertedUrl}')">
-                            <i class="fas fa-copy"></i>
-                            Copy
-                        </button>
-                    </div>
-                `;
-            } catch (error) {
-                errorDiv.querySelector('span').textContent = error.message;
-                errorDiv.style.display = 'flex';
-                resultDiv.innerHTML = '';
-            } finally {
-                convertBtn.classList.remove('loading');
+            if (!inputUrl) {
+                showError("Please enter a URL first!");
+                return;
             }
+
+            const pattern = /:360x526\.webp/g;
+            const convertedUrl = inputUrl.replace(pattern, '.origin');
+            
+            // Show result container with animation
+            resultContainer.classList.add('show');
+            convertedUrlElement.innerHTML = convertedUrl;
+            
+            // Auto-open in new tab
+            window.open(convertedUrl, '_blank');
         }
 
-        function downloadImage(url) {
-            const filename = getFileNameFromUrl(url) + '.png';
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = filename;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        function copyToClipboard(text) {
+        function copyToClipboard() {
+            const text = document.getElementById('convertedUrl').innerText;
             navigator.clipboard.writeText(text).then(() => {
-                alert('URL copied to clipboard!');
+                showSuccess("URL copied to clipboard!");
             });
         }
 
-        function getFileNameFromUrl(url) {
-            const cleanUrl = url.split(/[?#]/)[0];
-            const segments = cleanUrl.split('/');
-            const lastSegment = segments.pop() || segments.pop();
-            return lastSegment.replace(/\.[^/.]+$/, "");
+        function showError(message) {
+            const inputGroup = document.querySelector('.input-group');
+            inputGroup.style.animation = 'shake 0.4s ease';
+            setTimeout(() => inputGroup.style.animation = '', 400);
+            alert(message);
+        }
+
+        function showSuccess(message) {
+            const copyBtn = document.querySelector('.copy-btn');
+            copyBtn.innerHTML = `<i class="fas fa-check"></i> ${message}`;
+            setTimeout(() => {
+                copyBtn.innerHTML = `<i class="fas fa-copy"></i> Copy`;
+            }, 2000);
         }
     </script>
 </body>
