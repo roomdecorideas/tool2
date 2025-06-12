@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Converter Tool</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #1c1e21;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+        h1 {
+            text-align: center;
+            color: #0d6efd;
+            margin-bottom: 25px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #495057;
+        }
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: #86b7fe;
+            outline: 0;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        button {
+            flex-grow: 1;
+            padding: 12px 15px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        #btn-convert {
+            background-color: #0d6efd;
+            color: white;
+        }
+        #btn-convert:hover {
+            background-color: #0b5ed7;
+        }
+        #btn-copy {
+            background-color: #198754;
+            color: white;
+        }
+        #btn-copy:hover {
+            background-color: #157347;
+        }
+        #btn-reset {
+            background-color: #6c757d;
+            color: white;
+        }
+        #btn-reset:hover {
+            background-color: #5c636a;
+        }
+        #output {
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>URL Converter Tool ⚙️</h1>
+
+        <div class="form-group">
+            <label for="domain">1. Input Domain</label>
+            <input type="text" id="domain" placeholder="Contoh: domain.com">
+        </div>
+
+        <div class="form-group">
+            <label for="keywords">2. Input List Keyword (Satu per baris)</label>
+            <textarea id="keywords" placeholder="keyword satu
+keyword dua
+keyword tiga"></textarea>
+        </div>
+        
+        <div class="button-group">
+            <button id="btn-convert">Convert</button>
+        </div>
+
+        <div class="form-group" style="margin-top: 25px;">
+            <label for="output">Hasil Output</label>
+            <textarea id="output" readonly></textarea>
+        </div>
+        
+        <div class="button-group">
+            <button id="btn-copy">📋 Copy Hasil</button>
+            <button id="btn-reset">🔄 Reset</button>
+        </div>
+    </div>
+
+    <script>
+        const domainInput = document.getElementById('domain');
+        const keywordsInput = document.getElementById('keywords');
+        const outputTextarea = document.getElementById('output');
+        const convertBtn = document.getElementById('btn-convert');
+        const copyBtn = document.getElementById('btn-copy');
+        const resetBtn = document.getElementById('btn-reset');
+
+        // Fungsi utama untuk melakukan konversi
+        function convertUrls() {
+            const domain = domainInput.value.trim();
+            const keywords = keywordsInput.value.trim();
+
+            if (!domain || !keywords) {
+                alert('Kolom Domain dan Keyword tidak boleh kosong!');
+                return;
+            }
+
+            const keywordArray = keywords.split('\n')
+                .filter(k => k.trim() !== '') // Hilangkan baris kosong
+                .map(k => {
+                    // Ganti spasi dengan tanda hubung (-) dan encode URI component
+                    return k.trim().replace(/\s+/g, '-');
+                });
+            
+            if (keywordArray.length === 0) {
+                outputTextarea.value = '';
+                return;
+            }
+
+            const resultUrls = keywordArray.map(kw => `https://${domain}/detail.html?q=${kw}`);
+            
+            const finalOutput = `{${resultUrls.join('|')}}`;
+
+            outputTextarea.value = finalOutput;
+        }
+
+        // Fungsi untuk menyalin hasil ke clipboard
+        function copyOutput() {
+            if (!outputTextarea.value) {
+                alert('Tidak ada hasil untuk disalin!');
+                return;
+            }
+            navigator.clipboard.writeText(outputTextarea.value).then(() => {
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = '✅ Berhasil Disalin!';
+                copyBtn.style.backgroundColor = '#146c43';
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalText;
+                    copyBtn.style.backgroundColor = '#198754';
+                }, 2000);
+            }).catch(err => {
+                alert('Gagal menyalin. Coba lagi.');
+                console.error('Error copying text: ', err);
+            });
+        }
+
+        // Fungsi untuk mereset semua kolom
+        function resetAll() {
+            domainInput.value = '';
+            keywordsInput.value = '';
+            outputTextarea.value = '';
+        }
+
+        // Menambahkan event listener ke tombol
+        convertBtn.addEventListener('click', convertUrls);
+        copyBtn.addEventListener('click', copyOutput);
+        resetBtn.addEventListener('click', resetAll);
+
+    </script>
+
+</body>
+</html>
