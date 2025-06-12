@@ -165,7 +165,7 @@ keyword tiga"></textarea>
                 return;
             }
 
-            const resultUrls = keywordArray.map(kw => `https://${domain}/detail.html?q=${kw}`);
+            const resultUrls = keywordArray.map(kw => `${domain}/detail.html?q=${kw}`);
             
             const finalOutput = `{${resultUrls.join('|')}}`;
 
